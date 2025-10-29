@@ -9,7 +9,7 @@ export class CustomersService {
         this.emails= [
         {
             "id": 1,
-            "name": "Isabelathings44@gmail.com"
+            "email": "Isabelathings44@gmail.com"
         }, 
         {
             "id": 2,
