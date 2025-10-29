@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { CreateEmailDTO } from './dto/create-cliente.dto';
+import { Injectable,NotFoundException } from '@nestjs/common';
+import { UpsertCustomerDTO  } from './dto/Upsert-customer.dto';
 
 @Injectable()
 export class CustomersService {
@@ -26,7 +26,7 @@ export class CustomersService {
         return {message: "todos os emails foram removidos!"};
     }
 
-    create(email: CreateEmailDTO) {
+    create(email: UpsertCustomerDTO) {
         // last id porque eu quero controlar o próximo id
         const last_id: number = this.emails[this.emails.length - 1].id;
         const newEmail= {
@@ -36,5 +36,22 @@ export class CustomersService {
         this.emails.push(newEmail);
        
         return {message: "email valido!", email: newEmail};
+    }
+    update(id: number, emailDto: UpsertCustomerDTO){  
+        const index = this.emails.findIndex((e) => e.id === id);
+     
+        if (index === -1) {
+            throw new NotFoundException(`Email com ID ${id} não encontrado.`);
+        }
+     
+        const updatedEmail = {
+            'id': this.emails[index].id, 
+            ...emailDto                  
+        };
+    
+        this.emails[index] = updatedEmail; 
+    
+       
+        return { message: `Email com ID ${id} atualizado com sucesso!`, email: updatedEmail };
     }
 }

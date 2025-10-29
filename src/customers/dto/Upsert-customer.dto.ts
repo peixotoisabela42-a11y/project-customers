@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty } from "class-validator";
-export class CreateEmailDTO{
+export class UpsertCustomerDTO{
         @IsEmail()
         @IsNotEmpty()
         email: string;
